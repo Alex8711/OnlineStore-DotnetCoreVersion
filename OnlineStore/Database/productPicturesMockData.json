@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "ProductId": "fb6d4f10-79ed-4aff-a915-4ce29dc9c7e1",
+    "url": "../../assets/images/airpods.jpg"
+  },
+  {
+    "id": 2,
+    "ProductId": "a1fd0bee-0afc-4586-96c8-f46b7c99d2a0",
+    "url": "../../assets/images/phone.jpg"
+  },
+  {
+    "id": 3,
+    "ProductId": "88cf89b9-e4b5-4b42-a5bf-622bd3039601",
+    "url": "../../assets/images/camera.jpg"
+  },
+  {
+    "id": 4,
+    "ProductId": "2430bf64-fd56-460c-8b75-da0a1d1cd74c",
+    "url": "../../assets/images/playstation.jpg"
+  },
+  {
+    "id": 5,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47169",
+    "url": "../../assets/images/mouse.jpg"
+  },
+  {
+    "id": 6,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47110",
+    "url": "../../assets/images/alexa.jpg"
+  },
+  {
+    "id": 7,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47111",
+    "url": "../../assets/images/velopMesh.jpg"
+  },
+  {
+    "id": 8,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47112",
+    "url": "../../assets/images/ps5.jpg"
+  },
+  {
+    "id": 10,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47114",
+    "url": "../../assets/images/headset.jpg"
+  },
+  {
+    "id": 11,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47115",
+    "url": "../../assets/images/sonyTV.jpg"
+  },
+  {
+    "id": 12,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47116",
+    "url": "../../assets/images/rtx3080.jpg"
+  },
+  {
+    "id": 13,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47117",
+    "url": "../../assets/images/hyperxKeyboard.jpg"
+  },
+  {
+    "id": 14,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47118",
+    "url": "../../assets/images/alienwareMonitor.jpg"
+  },
+  {
+    "id": 15,
+    "ProductId": "39996f34-013c-4fc6-b1b3-0c1036c47119",
+    "url": "../../assets/images/xbox.jpg"
+  }
+]

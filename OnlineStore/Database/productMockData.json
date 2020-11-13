@@ -1,0 +1,153 @@
+[
+  {
+    "id": "fb6d4f10-79ed-4aff-a915-4ce29dc9c7e1",
+    "title": "Airpods Wireless Bluetooth Headphones",
+    "description": "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working",
+    "brand":"Apple",
+    "category":"Electronics",
+    "originalPrice": 299.99,
+    "discountPercentage": 0.9,
+    "countInStock": 10
+  },
+  {
+    "id": "a1fd0bee-0afc-4586-96c8-f46b7c99d2a0",
+    "title": "iPhone 11 Pro 256GB Memory",
+    "description": "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
+    "brand":"Apple",
+    "category":"Electronics",
+    "originalPrice": 899.99,
+    "discountPercentage": 0.99,
+    "countInStock": 10
+    
+  },
+  {
+    "id": "88cf89b9-e4b5-4b42-a5bf-622bd3039601",
+    "title": "Cannon EOS 80D DSLR Camera",
+    "description": "Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design",
+    "originalPrice": 6999.9,
+    "discountPercentage": 0.5,
+    "brand": "Cannon",
+    "category": "Electronics",
+    "countInStock": 5
+    
+  },
+  {
+    "id": "2430bf64-fd56-460c-8b75-da0a1d1cd74c",
+    "title": "Sony Playstation 4 Pro White Version",
+    "description": "The ultimate home entertainment center starts with PlayStation. Whether you are into gaming, HD movies, television, music",
+    "originalPrice": 399.8,
+    "discountPercentage": 0.9,
+    "brand": "Sony",
+    "category": "Electronics",
+    "countInStock": 11
+   
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47169",
+    "title": "Logitech G-Series Gaming Mouse",
+    "description": "Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience",
+    "originalPrice": 199.8,
+    "discountPercentage": null,
+    "brand": "Logitech",
+    "category": "Electronics",
+    "countInStock": 7
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47110",
+    "title": "Amazon Echo Dot 3rd Generation",
+    "description": "Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
+    "originalPrice": 99.99,
+    "discountPercentage": null,
+    "brand": "Amazon",
+    "category": "Electronics",
+    "countInStock": 0 
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47111",
+    "title": "Velop Whole Home Mesh Wifi",
+    "description": "An interconnected series of nodes that ensures complete signal coverage to all your devices",
+    "originalPrice": 299.8,
+    "discountPercentage": 0.9,
+    "brand": "Linksys",
+    "category": "Electronics",
+    "countInStock": 11
+   
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47112",
+    "title": "Sony Playstation 5",
+    "description": "Experience lightning-fast loading with an ultra-high speed SSD, deeper immersion with support for haptic feedback, adaptive triggers and 3D Audio, and an all-new generation of incredible PlayStation games",
+    "originalPrice": 499.8,
+    "discountPercentage": null,
+    "brand": "Sony",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47114",
+    "title": "Corsair Gaming Void RGB Elite Wireless Premium Gaming Headset",
+    "description": "Immerse yourself in the action with the Corsair VOID RGB Elite wireless, with custom-tuned 50mm neodymium audio drivers delivering 7.1 surround sound on PC",
+    "originalPrice": 129.8,
+    "discountPercentage": 0.9,
+    "brand": "Corsair",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47115",
+    "title": "Sony X800H 65-inch 4K HDR LED Android Smart TV",
+    "description": "Step into a new world of 4K HDR colour, contrast, and clarity. See beautiful pictures, rich with real world detail and texture, powered by our 4K HDR processor X1",
+    "originalPrice": 1455.8,
+    "discountPercentage": 0.99,
+    "brand": "Sony",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47116",
+    "title": "EVGA GeForce RTX 3080 Ultra Gaming",
+    "description": "EVGA GeForce RTX 3080 FTW3 ULTRA GAMING, 10G-P5-3897-KR, 10GB GDDR6X, iCX3 Technology, ARGB LED, Metal Backplate.",
+    "originalPrice": 2500.8,
+    "discountPercentage":null,
+    "brand": "EVGA",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47117",
+    "title": "HyperX Alloy Origins Mechanical Gaming Keyboard",
+    "description": "The HyperX Alloy Origins is a compact, sturdy keyboard featuring custom HyperX mechanical switches designed to give gamers the best blend of style, performance, and reliability",
+    "originalPrice": 154.99,
+    "discountPercentage": 0.9,
+    "brand": "Kingston",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47118",
+    "title": "New Alienware 27 Gaming Monitor - AW2720HF",
+    "description": "A 27 inch IPS gaming monitor with a blazing 240Hz refresh rate and true 1ms response time. Featuring AMD FreeSync technology for effortlessly smooth gaming",
+    "originalPrice": 529.99,
+    "discountPercentage": 0.9,
+    "brand": "Dell",
+    "category": "Electronics",
+    "countInStock": 11
+    
+  },
+  {
+    "id": "39996f34-013c-4fc6-b1b3-0c1036c47119",
+    "title": "Xbox Series X",
+    "description": "THE FASTEST,MOST POWERFUL XBOX EVER",
+    "originalPrice": 499.8,
+    "discountPercentage": null,
+    "brand": "MicroSoft",
+    "category": "Electronics",
+    "countInStock": 11
+  }
+]
