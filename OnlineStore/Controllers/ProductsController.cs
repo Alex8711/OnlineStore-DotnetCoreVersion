@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Dtos;
 using OnlineStore.Services;
 
 namespace OnlineStore.Controllers
@@ -13,10 +15,12 @@ namespace OnlineStore.Controllers
     public class ProductsController : ControllerBase
     {
         private IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -27,7 +31,9 @@ namespace OnlineStore.Controllers
             {
                 return NotFound("No Products");
             }
-            return Ok(productsFromRepo);
+
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(productsFromRepo);
+            return Ok(productsDto);
         }
 
         [HttpGet("{productId:Guid}")]
@@ -38,7 +44,9 @@ namespace OnlineStore.Controllers
             {
                 return NotFound($"No Product with Id-{productId}");
             }
-           return Ok(productFromRepo);
+
+            var productDto = _mapper.Map<ProductDto>(productFromRepo);
+            return Ok(productDto);
         }
     }
 }
