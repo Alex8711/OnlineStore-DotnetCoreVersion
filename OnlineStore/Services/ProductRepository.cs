@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OnlineStore.Database;
 
 namespace OnlineStore.Services
@@ -16,14 +17,70 @@ namespace OnlineStore.Services
             _context = context;
         }
 
-        Product IProductRepository.GetProduct(Guid productId)
+        public Product GetProduct(Guid productId)
         {
-            return _context.Products.FirstOrDefault(x => x.Id == productId);
+            return _context.Products.Include(x=>x.ProductPictures).FirstOrDefault(x => x.Id == productId);
         }
 
-        IEnumerable<Product> IProductRepository.GetProducts()
+        public IEnumerable<Product> GetProducts(string keyword)
         {
-            return _context.Products;
+            IQueryable<Product> result = _context.Products.Include(x => x.ProductPictures);
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                keyword = keyword.Trim();
+                result=result.Where(x => x.Title.Contains(keyword));
+            }
+
+            return result.ToList();
         }
+
+        public bool ProductExists(Guid productId)
+        {
+            return _context.Products.Any(x => x.Id == productId);
+        }
+
+       public IEnumerable<ProductPicture> GetPicturesByProductId(Guid productId)
+       {
+           return _context.ProductPictures.Where(x => x.ProductId == productId).ToList();
+       }
+
+       public ProductPicture GetPicture(int pictureId)
+       {
+           return _context.ProductPictures.Where(x => x.Id == pictureId).FirstOrDefault();
+       }
+
+       public void AddProduct(Product product)
+       {
+           if (product == null)
+           {
+               throw new ArgumentNullException(nameof(product));
+           }
+
+           _context.Products.Add(product);
+           //_context.SaveChanges();
+       }
+
+       public void AddProductPicture(Guid productId, ProductPicture productPicture)
+       {
+           if (productId == Guid.Empty)
+           {
+               throw new ArgumentNullException(nameof(productId));
+           }
+
+           if (productPicture == null)
+           {
+               throw new ArgumentNullException(nameof(productPicture));
+           }
+
+           productPicture.ProductId = productId;
+           _context.ProductPictures.Add(productPicture);
+       }
+
+        public bool Save()
+       {
+           return (_context.SaveChanges() >= 0);
+       }
+
+        
     }
 }

@@ -14,6 +14,12 @@ namespace OnlineStore.Profiles
         {
             CreateMap<Product, ProductDto>().ForMember(dest => dest.Price,
                 opt => opt.MapFrom(src => src.OriginalPrice * (decimal)(src.DiscountPercentage ?? 1)));
+            CreateMap<ProductForCreationDto, Product>()
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom(src => Guid.NewGuid()));
+            CreateMap<ProductForUpdateDto, Product>();
+
+            CreateMap<Product, ProductForUpdateDto>();
         }
     }
 }

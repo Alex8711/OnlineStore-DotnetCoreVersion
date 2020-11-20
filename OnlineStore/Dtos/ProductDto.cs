@@ -9,7 +9,7 @@ namespace OnlineStore.Dtos
     {
     
         public Guid Id { get; set; }
-   
+       
         public string Title { get; set; }
     
         public string Description { get; set; }
@@ -23,5 +23,8 @@ namespace OnlineStore.Dtos
 
         public DateTime CreateTime { get; set; }
         public DateTime? UpdateTime { get; set; }
+
+        // the property name should be same as the property in the Product!!
+        public ICollection<ProductPictureDto> ProductPictures { get; set; }
     }
 }
