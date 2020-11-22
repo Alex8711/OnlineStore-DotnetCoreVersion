@@ -73,6 +73,20 @@ namespace OnlineStore.Controllers
                 "GetPicture", new {productId = pictureModel.ProductId, pictureId = pictureModel.Id},pictureToReturn
             );
         }
+
+        [HttpDelete("{pictureId}")]
+        public IActionResult DeletePicture([FromRoute] Guid productId,[FromRoute] int pictureId)
+        {
+            if (!_productRepository.ProductExists(productId))
+            {
+                return NotFound("Product Not Exists");
+            }
+
+           var picture = _productRepository.GetPicture(pictureId);
+           _productRepository.DeleteProductPicture(picture);
+           _productRepository.Save();
+           return NoContent();
+        }
     }
     
 }

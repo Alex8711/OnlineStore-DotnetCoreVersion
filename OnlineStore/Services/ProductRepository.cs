@@ -34,6 +34,11 @@ namespace OnlineStore.Services
             return result.ToList();
         }
 
+        public IEnumerable<Product> GetProductsByIDList(IEnumerable<Guid> ids)
+        {
+            return _context.Products.Where(p => ids.Contains(p.Id)).ToList();
+        }
+
         public bool ProductExists(Guid productId)
         {
             return _context.Products.Any(x => x.Id == productId);
@@ -76,6 +81,20 @@ namespace OnlineStore.Services
            _context.ProductPictures.Add(productPicture);
        }
 
+       public void DeleteProduct(Product product)
+       {
+           _context.Products.Remove(product);
+       }
+
+       public void DeleteProductPicture(ProductPicture productPicture)
+       {
+           _context.ProductPictures.Remove(productPicture);
+       }
+
+       public void DeleteProducts(IEnumerable<Product> products)
+       {
+            _context.Products.RemoveRange(products);
+       }
         public bool Save()
        {
            return (_context.SaveChanges() >= 0);

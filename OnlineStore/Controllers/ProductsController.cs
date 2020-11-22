@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Dtos;
+using OnlineStore.Helper;
 using OnlineStore.Models;
 using OnlineStore.ResourceParameters;
 using OnlineStore.Services;
@@ -98,6 +99,34 @@ namespace OnlineStore.Controllers
            _mapper.Map(productToPatch, productFromRepo);
            _productRepository.Save();
            return NoContent();
+        }
+
+        [HttpDelete("{productId}")]
+        public IActionResult DeleteProduct([FromRoute] Guid productId)
+        {
+            if (!_productRepository.ProductExists(productId))
+            {
+                return NotFound("Product Not Exists");
+            }
+
+            var product =  _productRepository.GetProduct(productId);
+            _productRepository.DeleteProduct(product);
+            _productRepository.Save();
+            return NoContent();
+        }
+
+        [HttpDelete("({productIDs})")]
+        public IActionResult DeleteByIDs([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> productIDs)
+        {
+            if (productIDs == null)
+            {
+                return BadRequest();
+            }
+
+            var productsFromRepo = _productRepository.GetProductsByIDList(productIDs);
+            _productRepository.DeleteProducts(productsFromRepo);
+            _productRepository.Save();
+            return NoContent();
         }
     }
 }
