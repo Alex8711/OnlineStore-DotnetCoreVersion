@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -29,22 +30,21 @@ namespace OnlineStore.Controllers
 
         [HttpGet]
         [HttpHead] 
-        public IActionResult GetProducts([FromQuery] ProductResourceParameters parameters)
+        public async Task<IActionResult> GetProducts([FromQuery] ProductResourceParameters parameters)
         {
-            var productsFromRepo = _productRepository.GetProducts(parameters.Keyword);
+            var productsFromRepo = await _productRepository.GetProductsAsync(parameters.Keyword);
             if (productsFromRepo == null || productsFromRepo.Count() <= 0)
             {
                 return NotFound("No Products");
             }
-
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(productsFromRepo);
             return Ok(productsDto);
         }
 
         [HttpGet("{productId:Guid}",Name= "GetProductById")]
-        public IActionResult GetProductById(Guid productId)
+        public async Task<IActionResult> GetProductById(Guid productId)
         {
-            var productFromRepo = _productRepository.GetProduct(productId);
+            var productFromRepo = await _productRepository.GetProductAsync(productId);
             if (productFromRepo == null)
             {
                 return NotFound($"No Product with Id-{productId}");
@@ -55,41 +55,47 @@ namespace OnlineStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduct([FromBody] ProductForCreationDto productForCreationDto)
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductForCreationDto productForCreationDto)
         {
             var productModel = _mapper.Map<Product>(productForCreationDto);
             _productRepository.AddProduct(productModel);
-            _productRepository.Save();
+            await _productRepository.SaveAsync();
             var productToReturn = _mapper.Map<ProductDto>(productModel);
             return CreatedAtRoute("GetProductById", new {productId = productToReturn.Id}, productToReturn);
         }
 
         [HttpPut("{productId}")]
-        public IActionResult UpdateProduct( [FromRoute]Guid productId,[FromBody] ProductForUpdateDto productForUpdateDto )
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateProduct( [FromRoute]Guid productId,[FromBody] ProductForUpdateDto productForUpdateDto )
         {
-            if (!_productRepository.ProductExists(productId))
+            if (! await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-            var productFromRepo = _productRepository.GetProduct(productId);
+            var productFromRepo = await _productRepository.GetProductAsync(productId);
             //1. to dto
             //2. update dto
             //3. to model
             _mapper.Map(productForUpdateDto, productFromRepo);
-            _productRepository.Save();
+            await _productRepository.SaveAsync();
             return NoContent();
         }
 
         [HttpPatch("{productId}")]
-        public IActionResult PartiallyUpdateProduct([FromRoute] Guid productId,[FromBody] JsonPatchDocument<ProductForUpdateDto> patchDocument)
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> PartiallyUpdateProduct([FromRoute] Guid productId,[FromBody] JsonPatchDocument<ProductForUpdateDto> patchDocument)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (! await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-           var productFromRepo= _productRepository.GetProduct(productId);
+           var productFromRepo= await _productRepository.GetProductAsync(productId);
            var productToPatch = _mapper.Map<ProductForUpdateDto>(productFromRepo);
            patchDocument.ApplyTo(productToPatch,ModelState);
            if (!TryValidateModel(productToPatch))
@@ -97,35 +103,37 @@ namespace OnlineStore.Controllers
                return ValidationProblem(ModelState);
            }
            _mapper.Map(productToPatch, productFromRepo);
-           _productRepository.Save();
+           await _productRepository.SaveAsync();
            return NoContent();
         }
 
         [HttpDelete("{productId}")]
-        public IActionResult DeleteProduct([FromRoute] Guid productId)
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid productId)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (!await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-            var product =  _productRepository.GetProduct(productId);
+            var product = await _productRepository.GetProductAsync(productId);
             _productRepository.DeleteProduct(product);
-            _productRepository.Save();
+            await _productRepository.SaveAsync();
             return NoContent();
         }
 
         [HttpDelete("({productIDs})")]
-        public IActionResult DeleteByIDs([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> productIDs)
+        public async Task<IActionResult> DeleteByIDs([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> productIDs)
         {
             if (productIDs == null)
             {
                 return BadRequest();
             }
 
-            var productsFromRepo = _productRepository.GetProductsByIDList(productIDs);
+            var productsFromRepo = await _productRepository.GetProductsByIDListAsync(productIDs);
             _productRepository.DeleteProducts(productsFromRepo);
-            _productRepository.Save();
+            await _productRepository.SaveAsync();
             return NoContent();
         }
     }

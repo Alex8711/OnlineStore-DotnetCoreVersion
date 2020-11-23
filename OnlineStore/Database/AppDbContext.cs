@@ -4,13 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace OnlineStore.Database
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext: IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
@@ -30,7 +32,7 @@ namespace OnlineStore.Database
            IList<ProductPicture> productPictures = JsonConvert.DeserializeObject<IList<ProductPicture>>(productPicturesJsonData);
            modelBuilder.Entity<ProductPicture>().HasData(productPictures);
 
-            base.OnModelCreating(modelBuilder);
+           base.OnModelCreating(modelBuilder);
         }
     }
 }

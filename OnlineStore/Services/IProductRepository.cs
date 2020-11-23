@@ -8,12 +8,12 @@ namespace OnlineStore.Services
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetProducts(string keyword);
-        Product GetProduct(Guid productId);
-        IEnumerable<Product> GetProductsByIDList(IEnumerable<Guid> ids);
-        bool ProductExists(Guid productId);
-        IEnumerable<ProductPicture>GetPicturesByProductId(Guid productId);
-        ProductPicture GetPicture(int pictureId);
+        Task<IEnumerable<Product>> GetProductsAsync(string keyword);
+        Task<Product> GetProductAsync(Guid productId);
+        Task<IEnumerable<Product>> GetProductsByIDListAsync(IEnumerable<Guid> ids);
+        Task<bool> ProductExistsAsync(Guid productId);
+        Task<IEnumerable<ProductPicture>> GetPicturesByProductIdAsync(Guid productId);
+        Task<ProductPicture> GetPictureAsync(int pictureId);
         void AddProduct(Product product);
 
         void AddProductPicture(Guid productId, ProductPicture productPicture);
@@ -21,6 +21,6 @@ namespace OnlineStore.Services
         void DeleteProduct(Product product);
         void DeleteProducts(IEnumerable<Product> products);
         void DeleteProductPicture(ProductPicture picture);
-        bool Save();
+        Task<bool> SaveAsync();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Dtos;
 using OnlineStore.Models;
@@ -24,14 +25,14 @@ namespace OnlineStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPicturesListForProduct(Guid productId)
+        public async Task<IActionResult> GetPicturesListForProduct(Guid productId)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (! await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-            var picturesFromRepo = _productRepository.GetPicturesByProductId(productId);
+            var picturesFromRepo = await _productRepository.GetPicturesByProductIdAsync(productId);
             if (picturesFromRepo == null || picturesFromRepo.Count() <= 0)
             {
                 return NotFound("Pictures Not Exist");
@@ -41,14 +42,14 @@ namespace OnlineStore.Controllers
         }
 
         [HttpGet("{pictureId}",Name = "GetPicture")]
-        public IActionResult GetPicture(Guid productId, int pictureId)
+        public async Task<IActionResult> GetPicture(Guid productId, int pictureId)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (! await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-            var pictureFromRepo = _productRepository.GetPicture(pictureId);
+            var pictureFromRepo =await _productRepository.GetPictureAsync(pictureId);
             if (pictureFromRepo == null)
             {
                 return NotFound("Picture Not Exists");
@@ -58,16 +59,18 @@ namespace OnlineStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProductPicture([FromRoute] Guid productId,[FromBody] ProductPictureForCreationDto productPictureForCreationDto)
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateProductPicture([FromRoute] Guid productId,[FromBody] ProductPictureForCreationDto productPictureForCreationDto)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (! await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
             var pictureModel = _mapper.Map<ProductPicture>(productPictureForCreationDto);
             _productRepository.AddProductPicture(productId, pictureModel);
-            _productRepository.Save();
+            await _productRepository.SaveAsync();
             var pictureToReturn = _mapper.Map<ProductPictureDto>(pictureModel);
             return CreatedAtRoute(
                 "GetPicture", new {productId = pictureModel.ProductId, pictureId = pictureModel.Id},pictureToReturn
@@ -75,16 +78,18 @@ namespace OnlineStore.Controllers
         }
 
         [HttpDelete("{pictureId}")]
-        public IActionResult DeletePicture([FromRoute] Guid productId,[FromRoute] int pictureId)
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeletePicture([FromRoute] Guid productId,[FromRoute] int pictureId)
         {
-            if (!_productRepository.ProductExists(productId))
+            if (!await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound("Product Not Exists");
             }
 
-           var picture = _productRepository.GetPicture(pictureId);
+           var picture = await _productRepository.GetPictureAsync(pictureId);
            _productRepository.DeleteProductPicture(picture);
-           _productRepository.Save();
+           await _productRepository.SaveAsync();
            return NoContent();
         }
     }

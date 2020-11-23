@@ -17,12 +17,12 @@ namespace OnlineStore.Services
             _context = context;
         }
 
-        public Product GetProduct(Guid productId)
+        public async Task<Product> GetProductAsync(Guid productId)
         {
-            return _context.Products.Include(x=>x.ProductPictures).FirstOrDefault(x => x.Id == productId);
+            return await _context.Products.Include(x=>x.ProductPictures).FirstOrDefaultAsync(x => x.Id == productId);
         }
 
-        public IEnumerable<Product> GetProducts(string keyword)
+        public async Task<IEnumerable<Product>> GetProductsAsync(string keyword)
         {
             IQueryable<Product> result = _context.Products.Include(x => x.ProductPictures);
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -31,27 +31,27 @@ namespace OnlineStore.Services
                 result=result.Where(x => x.Title.Contains(keyword));
             }
 
-            return result.ToList();
+            return await result.ToListAsync();
         }
 
-        public IEnumerable<Product> GetProductsByIDList(IEnumerable<Guid> ids)
+        public async Task<IEnumerable<Product>> GetProductsByIDListAsync(IEnumerable<Guid> ids)
         {
-            return _context.Products.Where(p => ids.Contains(p.Id)).ToList();
+            return await _context.Products.Where(p => ids.Contains(p.Id)).ToListAsync();
         }
 
-        public bool ProductExists(Guid productId)
+        public async Task<bool>  ProductExistsAsync(Guid productId)
         {
-            return _context.Products.Any(x => x.Id == productId);
+            return await _context.Products.AnyAsync(x => x.Id == productId);
         }
 
-       public IEnumerable<ProductPicture> GetPicturesByProductId(Guid productId)
+       public async Task<IEnumerable<ProductPicture>>  GetPicturesByProductIdAsync(Guid productId)
        {
-           return _context.ProductPictures.Where(x => x.ProductId == productId).ToList();
+           return await _context.ProductPictures.Where(x => x.ProductId == productId).ToListAsync();
        }
 
-       public ProductPicture GetPicture(int pictureId)
+       public async Task<ProductPicture>  GetPictureAsync(int pictureId)
        {
-           return _context.ProductPictures.Where(x => x.Id == pictureId).FirstOrDefault();
+           return await _context.ProductPictures.Where(x => x.Id == pictureId).FirstOrDefaultAsync();
        }
 
        public void AddProduct(Product product)
@@ -95,9 +95,9 @@ namespace OnlineStore.Services
        {
             _context.Products.RemoveRange(products);
        }
-        public bool Save()
+        public async Task<bool> SaveAsync()
        {
-           return (_context.SaveChanges() >= 0);
+           return (await _context.SaveChangesAsync() >= 0);
        }
 
         
