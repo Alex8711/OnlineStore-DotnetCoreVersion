@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Database;
 
 namespace OnlineStore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210105035902_ApplicationUserMigration")]
+    partial class ApplicationUserMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace OnlineStore.Migrations
                         new
                         {
                             Id = "308660dc-ae51-480f-824d-7dca6714c3e2",
-                            ConcurrencyStamp = "20417594-c8b6-43f2-8af4-e3a3909bc691",
+                            ConcurrencyStamp = "3d569176-95a7-43fe-a006-989ce5de410d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -252,46 +254,19 @@ namespace OnlineStore.Migrations
                         {
                             Id = "90184155-dee0-40c9-bb1e-b5ed07afc04e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "054947bc-4994-4846-bbba-ba2d75f835c5",
+                            ConcurrencyStamp = "82ab9ced-68a5-4282-b6b0-4cd034486a56",
                             Email = "admin@fakexiecheng.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@FAKEXIECHENG.COM",
                             NormalizedUserName = "ADMIN@FAKEXIECHENG.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGtIImCr1fDtuUkcasnEX4py7G4pZ3NBUeKWKfIxImNz8mfeJBpJ/UARWZ6PsHEGXw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPOrwTN/vsd5WtWa2MGUmZM5nsjWQza+25xl72NZperAZlNH9Wfg/INx5lBq7Uli+A==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "91c7c61b-9acc-4664-a4ee-ca8303b02e7a",
+                            SecurityStamp = "11bcd702-e87f-4813-8e9f-667e46be5a19",
                             TwoFactorEnabled = false,
                             UserName = "admin@fakexiecheng.com"
                         });
-                });
-
-            modelBuilder.Entity("OnlineStore.Models.LineItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<double?>("DiscountPercentage")
-                        .HasColumnType("double");
-
-                    b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ShoppingCartId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ShoppingCartId");
-
-                    b.ToTable("LineItems");
                 });
 
             modelBuilder.Entity("OnlineStore.Models.Product", b =>
@@ -611,23 +586,6 @@ namespace OnlineStore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineStore.Models.ShoppingCart", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("ShoppingCarts");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -695,19 +653,6 @@ namespace OnlineStore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineStore.Models.LineItem", b =>
-                {
-                    b.HasOne("OnlineStore.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineStore.Models.ShoppingCart", null)
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("ShoppingCartId");
-                });
-
             modelBuilder.Entity("OnlineStore.Models.ProductPicture", b =>
                 {
                     b.HasOne("OnlineStore.Models.Product", "Product")
@@ -715,13 +660,6 @@ namespace OnlineStore.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("OnlineStore.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("OnlineStore.Models.ApplicationUser", "User")
-                        .WithOne("ShoppingCart")
-                        .HasForeignKey("OnlineStore.Models.ShoppingCart", "UserId");
                 });
 #pragma warning restore 612, 618
         }

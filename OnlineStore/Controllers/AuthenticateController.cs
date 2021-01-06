@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Dtos;
+using OnlineStore.Models;
+using OnlineStore.Services;
 
 namespace OnlineStore.Controllers
 {
@@ -19,13 +21,15 @@ namespace OnlineStore.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        public AuthenticateController(IConfiguration configuration, UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IProductRepository _productRepository;
+        public AuthenticateController(IConfiguration configuration, UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,IProductRepository productRepository)
         {
             _configuration = configuration;
             _userManager = userManager;
             _signInManager = signInManager;
+            _productRepository = productRepository;
         }
 
         [AllowAnonymous]
@@ -79,7 +83,7 @@ namespace OnlineStore.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             // create user
-            var user = new IdentityUser()
+            var user = new ApplicationUser()
             {
                 UserName = registerDto.Email,
                 Email = registerDto.Email
@@ -90,6 +94,14 @@ namespace OnlineStore.Controllers
             {
                 return BadRequest();
             }
+            //initiate shoppingCart
+            var shoppingCart = new ShoppingCart()
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id
+            };
+            await _productRepository.CreateShoppingCart(shoppingCart);
+            await _productRepository.SaveAsync();
             // return info
             return Ok();
         }
